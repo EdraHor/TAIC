@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public Vector2 direction;
     public float acceleration;
     public VariableJoystick variableJoystick;
+    public bool isLeft;
+    private Transform Player;
+    private int lastX;
 
     public void harder()
     {
@@ -26,6 +29,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         movement = false;
         joystick = gameObject.GetComponent<Joystick>();
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     public void ReloadLevel()
@@ -38,76 +42,61 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
-    //public void JumpButtonDown()
-    //{
-    //if (isGrounded)
-    //{
-    //    rb.AddForce(new Vector2(0, verticalImpulse), ForceMode.Impulse);
-    //    Debug.Log("JumpButton");
-    //}
-    //}
 
-    //public void LeftButton()
-    //{
-    //    movement = true;
-    //    if (movement)
-    //        speedX = -horizontalSpeed;
-    //    Debug.Log("LeftButton");
-    //}
-
-    //public void RightButton()
-    //{
-    //    movement = true;
-    //    if (movement)
-    //        speedX = horizontalSpeed;
-    //    Debug.Log("RightButton");
-    //}
-
-    //public void Stop()
-    //{
-    //    movement = false;
-    //    speedX = 0;
-    //}
 
     public void BootSpeed()
     {
+        if (isLeft)
+        {
+            direction.y *= -1;
+            rb.AddForce(-direction.normalized * acceleration, ForceMode.Impulse);
+            direction.y *= -1;
+        }
+        else
+        {
             rb.AddForce(direction.normalized * acceleration, ForceMode.Impulse);
+        }
+    }
+    
+
+    private void FixedUpdate()
+    {
+        if (Player)
+        {
+            int currentX = Mathf.RoundToInt(Player.position.x);
+            if (currentX > lastX) isLeft = false;
+            else if (currentX < lastX) isLeft = true;
+
+            lastX = Mathf.RoundToInt(Player.position.x);
+        }
     }
 
-        //void FixedUpdate()
-        //    {
-        //        if (joystick.Horizontal > 0.1f)
-        //        {
-        //            speedX = horizontalSpeed;
-        //            Debug.Log("RightButton");
-        //        }
+    //if (Input.GetKey(KeyCode.A))  //При на удержании кнопки ////////////////// DELETE
+    //{
+    //    speedX = -horizontalSpeed;
+    //}
+    //else if (Input.GetKey(KeyCode.D))
+    //{
+    //    speedX = horizontalSpeed;
+    //}
+    //if (Input.GetKeyDown(KeyCode.W) && isGrounded)  //При от нажатии на кнопку
+    //{
+    //    rb.AddForce(new Vector2(0, verticalImpulse), ForceMode.Impulse);
+    //    Debug.Log("SpaceBar");
+    //} //////////////////////////////////////////////////////////////////////// DELETE
 
-        //if (Input.GetKey(KeyCode.A))  //При на удержании кнопки ////////////////// DELETE
-        //{
-        //    speedX = -horizontalSpeed;
-        //}
-        //else if (Input.GetKey(KeyCode.D))
-        //{
-        //    speedX = horizontalSpeed;
-        //}
-        //if (Input.GetKeyDown(KeyCode.W) && isGrounded)  //При от нажатии на кнопку
-        //{
-        //    rb.AddForce(new Vector2(0, verticalImpulse), ForceMode.Impulse);
-        //    Debug.Log("SpaceBar");
-        //} //////////////////////////////////////////////////////////////////////// DELETE
+    //    transform.Translate(speedX, 0, 0);
+    //    speedX = 0;
+    //}
 
-        //    transform.Translate(speedX, 0, 0);
-        //    speedX = 0;
-        //}
-
-        //private void OnCollisionEnter(Collision collision)
-        //{
-        //    if (collision.gameObject.tag == "Ground")
-        //        isGrounded = true;
-        //}
-        //private void OnCollisionExit(Collision collision)
-        //{
-        //    if (collision.gameObject.tag == "Ground")
-        //        isGrounded = false;
-        //}
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Ground")
+    //        isGrounded = true;
+    //}
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Ground")
+    //        isGrounded = false;
+    //}
+}
