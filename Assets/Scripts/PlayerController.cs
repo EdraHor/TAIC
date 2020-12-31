@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     bool isGrounded;
     bool movement;
     public Vector2 direction;
-    public float acceleration;
+    //public float acceleration;
     public VariableJoystick variableJoystick;
     public bool isLeft;
     private Transform Player;
@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     void Start() 
     {
         rb = GetComponent<Rigidbody>();
-        movement = false;
+        //movement = false;
         joystick = gameObject.GetComponent<Joystick>();
         Player = GameObject.FindGameObjectWithTag("Player").transform;
     }
@@ -44,20 +44,20 @@ public class PlayerController : MonoBehaviour
 
 
 
-    public void BootSpeed()
-    {
-        if (isLeft)
-        {
-            direction.y *= -1;
-            rb.AddForce(-direction.normalized * acceleration, ForceMode.Impulse);
-            direction.y *= -1;
-        }
-        else
-        {
-            rb.AddForce(direction.normalized * acceleration, ForceMode.Impulse);
-        }
-    }
-    
+    //public void BootSpeed()
+    //{
+    //    if (isLeft)
+    //    {
+    //        direction.y *= -1;
+    //        rb.AddForce(-direction.normalized * acceleration, ForceMode.Impulse);
+    //        direction.y *= -1;
+    //    }
+    //    else
+    //    {
+    //        rb.AddForce(direction.normalized * acceleration, ForceMode.Impulse);
+    //    }
+    //}
+
 
     private void FixedUpdate()
     {
