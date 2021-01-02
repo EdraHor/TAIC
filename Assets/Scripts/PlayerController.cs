@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
         JoystickPlayerExample.verticalImpulse -= 0.5f;
     }
 
+
+
     void Start() 
     {
         rb = GetComponent<Rigidbody>();

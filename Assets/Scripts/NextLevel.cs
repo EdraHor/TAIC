@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class NextLevel : MonoBehaviour
 {
+    public GameObject LoadScreen;
     private void OnCollisionEnter(Collision collision)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        LoadScreen.SetActive(true);
     }
 }
