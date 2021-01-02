@@ -8,8 +8,9 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: d40f752b5509a8b43ad4a0a37cbe56a4
+  m_OcclusionCullingData: {fileID: 36300000, guid: 3f1473804af7eb9429e023d5735278fd,
+    type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -18054,7 +18055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde77aa48e6819a41a0c64643f0947b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Character: {fileID: 1615179695}
+  Character: {fileID: 285771769}
 --- !u!65 &1555418275
 BoxCollider:
   m_ObjectHideFlags: 0
