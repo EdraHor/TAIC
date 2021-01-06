@@ -13,10 +13,13 @@ public class PlayerMovementController : MonoBehaviour
     public float JumpForce = 1f;
     public float maxSpeed = 20f;
     public float Boost = 1000f;
+    private Vector2 _horizontalVelosity;
     public bool isLeft;
     public Sprite s_boostLeft;
     public Sprite s_boostRight;
     public Image BoostButtonImage;
+    private Animator animator;
+    public GameObject Player;
 
 
     //даем возможность выбрать тэг пола. 
@@ -72,6 +75,7 @@ public class PlayerMovementController : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody>();
         _collider = GetComponent<CapsuleCollider>();
 
@@ -89,6 +93,10 @@ public class PlayerMovementController : MonoBehaviour
         JumpLogic();
         MoveLogic();
         directionDetecter();
+
+        //
+        animator.SetFloat("HorizontalVelosity", Mathf.Abs(Input.GetAxis("Horizontal")));
+        //
     }
 
     void directionDetecter()
@@ -97,12 +105,25 @@ public class PlayerMovementController : MonoBehaviour
         {
             isLeft = false;
             BoostButtonImage.sprite = s_boostRight;
+            Player.transform.rotation = Quaternion.Euler(0, 90, 0);
         }
+        else
+        {
+            animator.SetBool("isWalking", false);
+        }
+
         if (joystick.Horizontal < 0 | _movementVector.x < 0)
         {
             isLeft = true;
             BoostButtonImage.sprite = s_boostLeft;
+            Player.transform.rotation = Quaternion.Euler(0, -90, 0);
         }
+        //else
+        //{
+        //    animator.SetBool("isWalking", false);
+        //}
+
+        //if (joystick.Horizontal != 0 | _movementVector.x != 0) animator.SetBool("isWalking", true);
     }
 
     private void SpeedControl()
@@ -120,7 +141,8 @@ public class PlayerMovementController : MonoBehaviour
         if (_rb.velocity.magnitude < maxSpeed)
         {
             _rb.AddForce(_movementVector * Speed, ForceMode.Impulse);
-            _rb.AddForce(_movementVectorJoystic * Speed, ForceMode.Impulse); 
+            _rb.AddForce(_movementVectorJoystic * Speed, ForceMode.Impulse);
+            //animator.SetBool("isWalking", true);
         }
     }
 
